@@ -1,110 +1,172 @@
-<!-- Ficheiro: arvore.html (Fragmento para HTMX) -->
-<div class="w-full max-w-5xl space-y-6 animate-fade-in" x-data="{
+<!-- Ficheiro: arvore.html (Fragmento Completo para HTMX) -->
+<div class="w-full max-w-6xl space-y-6 animate-fade-in" x-data="{
   build: 'CS',
   gold: 'Fada',
-  totalSP: 1500,
+  totalSP: 2500,
+  hideZero: false,
+  searchSkill: '',
   
   builds: [
-    { id: 'CS', name: 'Clan Ship', color: 'amber' },
-    { id: 'SC', name: 'Shadow Clone', color: 'purple' },
-    { id: 'Pet', name: 'Pet', color: 'rose' },
-    { id: 'HS', name: 'Heavenly Strike', color: 'cyan' },
-    { id: 'DG', name: 'Dagger', color: 'emerald' },
-    { id: 'GG', name: 'Gold Gun', color: 'yellow' }
+    { id: 'CS', name: 'Clan Ship (Navio)' },
+    { id: 'SC', name: 'Shadow Clone (Clone)' },
+    { id: 'Pet', name: 'Pet (Mascote)' },
+    { id: 'HS', name: 'Heavenly Strike (Golpe)' },
+    { id: 'DG', name: 'Dagger (Adaga)' },
+    { id: 'GG', name: 'Gold Gun (Arma de Ouro)' }
   ],
   
-  golds: ['Fada', 'HoG', 'Chesterson'],
+  golds: [
+    { id: 'Fada', name: 'Fada (Fairy)' },
+    { id: 'HoG', name: 'Heart of Gold (Pet)' },
+    { id: 'Chesterson', name: 'Multi-Spawn Chesterson' }
+  ],
 
   trees: [
     {
-      id: 'knight', name: 'Cavaleiro (Knight)', color: 'rose',
+      id: 'knight', name: 'Cavaleiro (Knight)', border: 'border-rose-500/40', badge: 'bg-rose-500/20 text-rose-400', bar: 'from-rose-600 to-rose-400',
       skills: [
-        { name: 'Knight\'s Valor', max: 20, weight: { CS: 0.2, SC: 0.3, Pet: 1, HS: 0.8, DG: 0.4, GG: 0.2 } },
-        { name: 'Chivalric Order', max: 20, weight: { CS: 0.3, SC: 0.5, Pet: 0.9, HS: 0.9, DG: 0.5, GG: 0.3 } },
-        { name: 'Cleaving Strike', max: 20, weight: { CS: 0.8, SC: 0.8, Pet: 1, HS: 1, DG: 0.9, GG: 0.7 } },
-        { name: 'Barbaric Fury', max: 15, weight: { CS: 0, SC: 0.6, Pet: 1, HS: 0.8, DG: 0.7, GG: 0 } },
-        { name: 'Twilight Gathering', max: 25, weight: { CS: 0, SC: 0.7, Pet: 0.9, HS: 1, DG: 0, GG: 0 } }
+        { name: 'Knight\'s Valor', tier: 1, max: 20, weight: { CS: 0.1, SC: 0.3, Pet: 1, HS: 0.8, DG: 0.4, GG: 0.1 } },
+        { name: 'Chivalric Order', tier: 2, max: 20, weight: { CS: 0.4, SC: 0.6, Pet: 0.9, HS: 0.9, DG: 0.7, GG: 0.3 } },
+        { name: 'Cleaving Strike', tier: 2, max: 20, weight: { CS: 0.8, SC: 0.8, Pet: 1, HS: 1, DG: 0.9, GG: 0.8 } },
+        { name: 'Heart of Gold', tier: 2, max: 20, weight: { CS: 0.8, SC: 0.8, Pet: 0.9, HS: 0.8, DG: 0.8, GG: 0.8 }, goldMod: { Fada: 0, HoG: 1.3, Chesterson: 0 } },
+        { name: 'Summon Inferno', tier: 3, max: 20, weight: { CS: 0, SC: 0.6, Pet: 1, HS: 1, DG: 1, GG: 0.5 } },
+        { name: 'Barbaric Fury', tier: 3, max: 15, weight: { CS: 0, SC: 0.6, Pet: 1, HS: 0.9, DG: 0.8, GG: 0 } },
+        { name: 'Divine Wrath', tier: 4, max: 20, weight: { CS: 0, SC: 0.5, Pet: 0.8, HS: 1, DG: 0.6, GG: 0 } },
+        { name: 'Twilight Gathering', tier: 4, max: 25, weight: { CS: 0, SC: 0.7, Pet: 0.9, HS: 1, DG: 0, GG: 0 } },
+        { name: 'Eventide Afterglow', tier: 5, max: 25, weight: { CS: 0, SC: 0.6, Pet: 0.8, HS: 1, DG: 0, GG: 0 } }
       ]
     },
     {
-      id: 'warlord', name: 'Senhor da Guerra (Warlord)', color: 'amber',
+      id: 'summoner', name: 'Invocador (Summoner)', border: 'border-orange-500/40', badge: 'bg-orange-500/20 text-orange-400', bar: 'from-orange-600 to-orange-400',
       skills: [
-        { name: 'Master Commander', max: 20, weight: { CS: 1, SC: 0.4, Pet: 0.3, HS: 0.2, DG: 0.3, GG: 0.8 } },
-        { name: 'Heroic Might', max: 20, weight: { CS: 1, SC: 0.6, Pet: 0.4, HS: 0.3, DG: 0.4, GG: 0.9 } },
-        { name: 'Aerial Assault', max: 20, weight: { CS: 1, SC: 0.2, Pet: 0.1, HS: 0, DG: 0.1, GG: 0.5 } },
-        { name: 'Tactical Insight', max: 20, weight: { CS: 0.9, SC: 0.8, Pet: 0.8, HS: 0.7, DG: 0.8, GG: 0.9 } },
-        { name: 'Anchoring Shot', max: 15, weight: { CS: 1, SC: 0.8, Pet: 0.7, HS: 0.6, DG: 0.9, GG: 0.8 } },
-        { name: 'Astral Awakening', max: 15, weight: { CS: 1, SC: 0.9, Pet: 0.8, HS: 0.7, DG: 0.8, GG: 0.9 } },
-        { name: 'Voltaic Sails', max: 25, weight: { CS: 1, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 0 } }
+        { name: 'Pet Evolution', tier: 1, max: 20, weight: { CS: 0.2, SC: 0.3, Pet: 1, HS: 0.1, DG: 0.1, GG: 0.1 } },
+        { name: 'Summon Help', tier: 2, max: 20, weight: { CS: 0.3, SC: 0.4, Pet: 1, HS: 0.2, DG: 0.2, GG: 0.2 } },
+        { name: 'Ember Arts', tier: 2, max: 20, weight: { CS: 0.4, SC: 0.5, Pet: 1, HS: 0.2, DG: 0.2, GG: 0.2 } },
+        { name: 'Companion Warfare', tier: 2, max: 20, weight: { CS: 1, SC: 1, Pet: 1, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Flash Zip', tier: 3, max: 15, weight: { CS: 0.3, SC: 0.3, Pet: 1, HS: 0.2, DG: 0.2, GG: 0.2 } },
+        { name: 'Lightning Burst', tier: 3, max: 20, weight: { CS: 0, SC: 0, Pet: 1, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Combat Techniques', tier: 4, max: 20, weight: { CS: 0.8, SC: 0.8, Pet: 1, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Dual Summon', tier: 4, max: 25, weight: { CS: 0, SC: 0, Pet: 1, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Beastly Frenzy', tier: 5, max: 25, weight: { CS: 0.5, SC: 0.5, Pet: 1, HS: 0, DG: 0, GG: 0 } }
       ]
     },
     {
-      id: 'sorcerer', name: 'Feiticeiro (Sorcerer)', color: 'cyan',
+      id: 'warlord', name: 'Senhor da Guerra (Warlord)', border: 'border-amber-500/40', badge: 'bg-amber-500/20 text-amber-400', bar: 'from-amber-600 to-amber-400',
       skills: [
-        { name: 'Limit Break', max: 20, weight: { CS: 0.2, SC: 0.6, Pet: 0.3, HS: 0.9, DG: 0.3, GG: 0.2 } },
-        { name: 'Midas Ultimate', max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 0.8 }, goldMod: { Fada: 1, HoG: 0.7, Chesterson: 0.8 } },
-        { name: 'Fairy Charm', max: 10, weight: { CS: 0.6, SC: 0.6, Pet: 0.6, HS: 0.6, DG: 0.6, GG: 0.6 }, goldMod: { Fada: 1.5, HoG: 0.1, Chesterson: 0.1 } },
-        { name: 'Phantom Vengeance', max: 20, weight: { CS: 0, SC: 1, Pet: 0, HS: 0, DG: 0, GG: 0 } },
-        { name: 'Dimensional Shift', max: 20, weight: { CS: 0.6, SC: 1, Pet: 0.6, HS: 0.8, DG: 0.6, GG: 0.6 } }
+        { name: 'Master Commander', tier: 1, max: 20, weight: { CS: 1, SC: 0.6, Pet: 0.6, HS: 0.5, DG: 0.6, GG: 0.8 } },
+        { name: 'Spoils of War', tier: 2, max: 20, weight: { CS: 0.8, SC: 0.8, Pet: 0.8, HS: 0.8, DG: 0.8, GG: 0.8 }, goldMod: { Fada: 1.1, HoG: 0, Chesterson: 1.3 } },
+        { name: 'Heroic Might', tier: 2, max: 20, weight: { CS: 1, SC: 0.6, Pet: 0.5, HS: 0.5, DG: 0.5, GG: 0.9 } },
+        { name: 'Aerial Assault', tier: 2, max: 20, weight: { CS: 1, SC: 0.3, Pet: 0.2, HS: 0.1, DG: 0.2, GG: 0.5 } },
+        { name: 'Tactical Insight', tier: 3, max: 20, weight: { CS: 0.9, SC: 0.9, Pet: 0.9, HS: 0.8, DG: 0.9, GG: 0.9 } },
+        { name: 'Searing Light', tier: 3, max: 20, weight: { CS: 1, SC: 0.5, Pet: 0.4, HS: 0.3, DG: 0.4, GG: 0.8 } },
+        { name: 'Coordinated Offensive', tier: 3, max: 20, weight: { CS: 1, SC: 0.6, Pet: 0.5, HS: 0.2, DG: 0.4, GG: 0.7 } },
+        { name: 'Astral Awakening', tier: 4, max: 15, weight: { CS: 1, SC: 0.9, Pet: 0.9, HS: 0.8, DG: 0.9, GG: 0.9 } },
+        { name: 'Command Supremacy', tier: 4, max: 20, weight: { CS: 1, SC: 0.5, Pet: 0.4, HS: 0.3, DG: 0.4, GG: 0.8 } },
+        { name: 'Anchoring Shot', tier: 4, max: 15, weight: { CS: 1, SC: 0.9, Pet: 0.8, HS: 0.6, DG: 0.9, GG: 0.9 } },
+        { name: 'Voltaic Sails', tier: 5, max: 25, weight: { CS: 1, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Galvanized Mast', tier: 5, max: 25, weight: { CS: 1, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 0 } }
       ]
     },
     {
-      id: 'rogue', name: 'Ladino (Rogue)', color: 'emerald',
+      id: 'sorcerer', name: 'Feiticeiro (Sorcerer)', border: 'border-cyan-500/40', badge: 'bg-cyan-500/20 text-cyan-400', bar: 'from-cyan-600 to-cyan-400',
       skills: [
-        { name: 'Master Thief', max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 0.8 } },
-        { name: 'Assassinate', max: 20, weight: { CS: 0.6, SC: 0.7, Pet: 0.8, HS: 0, DG: 1, GG: 0.6 } },
-        { name: 'Summon Dagger', max: 20, weight: { CS: 0.1, SC: 0.2, Pet: 0.3, HS: 0, DG: 1, GG: 0.1 } },
-        { name: 'Cloaking', max: 15, weight: { CS: 0.5, SC: 0.6, Pet: 0.5, HS: 0.7, DG: 0.6, GG: 0.4 } },
-        { name: 'Poison Edge', max: 20, weight: { CS: 0.6, SC: 0.5, Pet: 0.7, HS: 0.3, DG: 1, GG: 0.5 } },
-        { name: 'Blade Stream', max: 25, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 1, GG: 0 } }
+        { name: 'Limit Break', tier: 1, max: 20, weight: { CS: 0.3, SC: 0.7, Pet: 0.4, HS: 0.9, DG: 0.4, GG: 0.3 } },
+        { name: 'Midas Ultimate', tier: 2, max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 0.9 }, goldMod: { Fada: 1, HoG: 0.7, Chesterson: 1 } },
+        { name: 'Fairy Charm', tier: 2, max: 10, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 0.7 }, goldMod: { Fada: 1.4, HoG: 0.2, Chesterson: 0.2 } },
+        { name: 'Mana Siphon', tier: 2, max: 20, weight: { CS: 0.3, SC: 0.8, Pet: 0.5, HS: 1, DG: 0.5, GG: 0.3 } },
+        { name: 'Shadow Clone', tier: 3, max: 20, weight: { CS: 0, SC: 1, Pet: 0, HS: 0.2, DG: 0, GG: 0 } },
+        { name: 'eternal Darkness', tier: 3, max: 20, weight: { CS: 0, SC: 1, Pet: 0, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Mana Monster', tier: 3, max: 15, weight: { CS: 0.2, SC: 0.6, Pet: 0.3, HS: 0.9, DG: 0.3, GG: 0.2 } },
+        { name: 'Lightning Strike', tier: 4, max: 15, weight: { CS: 0.7, SC: 0.8, Pet: 0.8, HS: 0.7, DG: 0.9, GG: 0.7 } },
+        { name: 'Dimensional Shift', tier: 4, max: 20, weight: { CS: 0.7, SC: 1, Pet: 0.7, HS: 0.8, DG: 0.7, GG: 0.7 } },
+        { name: 'Phantom Vengeance', tier: 4, max: 20, weight: { CS: 0, SC: 1, Pet: 0, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Forbidden Contract', tier: 5, max: 20, weight: { CS: 0.8, SC: 0.9, Pet: 0.8, HS: 0.9, DG: 0.9, GG: 0.8 } },
+        { name: 'Nightmare Puppeteer', tier: 5, max: 25, weight: { CS: 0, SC: 1, Pet: 0, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Terrifying Pact', tier: 5, max: 25, weight: { CS: 0, SC: 1, Pet: 0, HS: 0, DG: 0, GG: 0 } }
       ]
     },
     {
-      id: 'alchemist', name: 'Alquimista (Alchemist)', color: 'yellow',
+      id: 'rogue', name: 'Ladino (Rogue)', border: 'border-emerald-500/40', badge: 'bg-emerald-500/20 text-emerald-400', bar: 'from-emerald-600 to-emerald-400',
       skills: [
-        { name: 'Transmutation', max: 20, weight: { CS: 0.5, SC: 0.5, Pet: 0.5, HS: 0.5, DG: 0.5, GG: 1 } },
-        { name: 'Gold Gun', max: 20, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 1 } },
-        { name: 'Midas Overflow', max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 1 }, goldMod: { Fada: 1, HoG: 0.6, Chesterson: 1 } },
-        { name: 'Auric Shot', max: 25, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 1 } }
+        { name: 'Master Thief', tier: 1, max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 0.8 } },
+        { name: 'Assassinate', tier: 2, max: 20, weight: { CS: 0.6, SC: 0.7, Pet: 0.8, HS: 0, DG: 1, GG: 0.6 } },
+        { name: 'Summon Dagger', tier: 2, max: 20, weight: { CS: 0.1, SC: 0.1, Pet: 0.2, HS: 0, DG: 1, GG: 0.1 } },
+        { name: 'Ambush', tier: 2, max: 10, weight: { CS: 0.4, SC: 0.4, Pet: 0.4, HS: 0.4, DG: 0.4, GG: 0.5 }, goldMod: { Fada: 0.5, HoG: 0.5, Chesterson: 1.5 } },
+        { name: 'Stroke of Luck', tier: 3, max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.8, HS: 0, DG: 1, GG: 0.7 } },
+        { name: 'Poison Edge', tier: 3, max: 20, weight: { CS: 0.7, SC: 0.6, Pet: 0.8, HS: 0.4, DG: 1, GG: 0.7 } },
+        { name: 'Cloaking', tier: 3, max: 15, weight: { CS: 0.6, SC: 0.6, Pet: 0.6, HS: 0.7, DG: 0.6, GG: 0.5 } },
+        { name: 'Weakpoint Throw', tier: 4, max: 20, weight: { CS: 0.3, SC: 0.3, Pet: 0.4, HS: 0, DG: 1, GG: 0.3 } },
+        { name: 'Loaded Dice', tier: 4, max: 20, weight: { CS: 0.6, SC: 0.6, Pet: 0.6, HS: 0.5, DG: 0.8, GG: 0.7 } },
+        { name: 'Deadly Focus', tier: 4, max: 15, weight: { CS: 0.6, SC: 0.7, Pet: 0.8, HS: 0, DG: 1, GG: 0.7 } },
+        { name: 'Blade Stream', tier: 5, max: 25, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 1, GG: 0 } },
+        { name: 'Marksman\'s Breath', tier: 5, max: 25, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 1, GG: 0 } }
+      ]
+    },
+    {
+      id: 'alchemist', name: 'Alquimista (Alchemist)', border: 'border-yellow-500/40', badge: 'bg-yellow-500/20 text-yellow-400', bar: 'from-yellow-600 to-yellow-400',
+      skills: [
+        { name: 'Transmutation', tier: 1, max: 20, weight: { CS: 0.6, SC: 0.6, Pet: 0.6, HS: 0.6, DG: 0.6, GG: 1 } },
+        { name: 'Chesterson Incense', tier: 2, max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 0.9 }, goldMod: { Fada: 1, HoG: 0.2, Chesterson: 1.4 } },
+        { name: 'Midas Overflow', tier: 2, max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 1 }, goldMod: { Fada: 1.1, HoG: 0.7, Chesterson: 1.1 } },
+        { name: 'Gold Gun', tier: 2, max: 20, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 1 } },
+        { name: 'Sprouting Salts', tier: 3, max: 20, weight: { CS: 0.6, SC: 0.6, Pet: 0.6, HS: 0.6, DG: 0.6, GG: 0.8 } },
+        { name: 'Magnum Opus', tier: 3, max: 20, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 1 } },
+        { name: 'Love Potion', tier: 3, max: 15, weight: { CS: 0.5, SC: 0.5, Pet: 0.5, HS: 0.5, DG: 0.5, GG: 0.8 } },
+        { name: 'Midas Mastery', tier: 4, max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 1 } },
+        { name: 'Philosopher\'s Stone', tier: 4, max: 20, weight: { CS: 0.6, SC: 0.6, Pet: 0.6, HS: 0.6, DG: 0.6, GG: 1 } },
+        { name: 'Royal Contract', tier: 4, max: 20, weight: { CS: 0.8, SC: 0.8, Pet: 0.8, HS: 0.8, DG: 0.8, GG: 0.9 } },
+        { name: 'Auric Shot', tier: 5, max: 25, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 1 } },
+        { name: 'Aureole', tier: 5, max: 25, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 1 } }
       ]
     }
   ],
 
   calcLevel(skill) {
-    let baseW = skill.weight[this.build] || 0;
+    let baseW = skill.weight[this.build] !== undefined ? skill.weight[this.build] : 0;
     if (skill.goldMod) {
-      baseW = baseW * (skill.goldMod[this.gold] || 1);
+      let gMod = skill.goldMod[this.gold] !== undefined ? skill.goldMod[this.gold] : 1;
+      baseW = baseW * gMod;
     }
-    if (baseW === 0) return 0;
+    if (baseW <= 0) return 0;
     
-    // Escala proporcional aos SP disponíveis (base de referência: 3000 SP para full build)
-    let factor = Math.min(1, Math.max(0.1, this.totalSP / 3000));
+    // Curva de progressão baseada em 4500 SP para atingir níveis máximos nas skills principais
+    let factor = Math.min(1, Math.max(0.08, this.totalSP / 4500));
     let rawLevel = Math.round(skill.max * baseW * factor);
     return Math.min(skill.max, Math.max(1, rawLevel));
+  },
+
+  treeActiveCount(tree) {
+    return tree.skills.filter(s => this.calcLevel(s) > 0).length;
+  },
+
+  shouldShow(skill) {
+    if (this.hideZero && this.calcLevel(skill) === 0) return false;
+    if (this.searchSkill !== '' && !skill.name.toLowerCase().includes(this.searchSkill.toLowerCase())) return false;
+    return true;
   }
 }">
 
   <!-- Cabeçalho -->
   <div class="text-center space-y-2 mb-6">
     <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase">
-      Otimizador de <span class="text-emerald-400">Skill Tree</span>
+      Otimizador Completo de <span class="text-emerald-400">Skill Tree</span>
     </h1>
-    <p class="text-slate-400 text-sm">Distribuição inteligente de pontos de habilidade conforme sua Build e Pontos (SP)</p>
+    <p class="text-slate-400 text-sm">Todas as 6 Árvores (Knight, Summoner, Warlord, Sorcerer, Rogue e Alchemist) ajustadas em tempo real</p>
   </div>
 
-  <!-- Painel de Controlo (Filtros) -->
+  <!-- Painel de Controlo Principal -->
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
       <!-- 1. Escolha da Build -->
       <div>
-        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">1. Build de Dano</label>
+        <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-3">1. Escolha a Build de Dano</label>
         <div class="grid grid-cols-2 gap-2">
           <template x-for="b in builds">
             <button 
               @click="build = b.id"
-              :class="build === b.id ? 'bg-emerald-500 text-slate-950 font-bold border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.3)]' : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'"
-              class="py-2 px-3 rounded-xl border text-xs transition-all text-center"
+              :class="build === b.id ? 'bg-emerald-500 text-slate-950 font-extrabold border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.3)]' : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700 hover:text-white'"
+              class="py-2.5 px-3 rounded-xl border text-xs transition-all text-center"
               x-text="b.name">
             </button>
           </template>
@@ -113,15 +175,15 @@
 
       <!-- 2. Fonte de Ouro -->
       <div>
-        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">2. Fonte de Ouro</label>
+        <label class="block text-xs font-bold text-amber-400 uppercase tracking-wider mb-3">2. Escolha a Fonte de Ouro</label>
         <div class="flex flex-col gap-2">
           <template x-for="g in golds">
             <button 
-              @click="gold = g"
-              :class="gold === g ? 'bg-amber-500 text-slate-950 font-bold border-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.3)]' : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'"
-              class="py-2 px-4 rounded-xl border text-xs transition-all text-left flex justify-between items-center">
-              <span x-text="g"></span>
-              <span x-show="gold === g" class="text-slate-950 font-black">✓</span>
+              @click="gold = g.id"
+              :class="gold === g.id ? 'bg-amber-500 text-slate-950 font-extrabold border-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.3)]' : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700 hover:text-white'"
+              class="py-2.5 px-4 rounded-xl border text-xs transition-all text-left flex justify-between items-center">
+              <span x-text="g.name"></span>
+              <span x-show="gold === g.id" class="text-slate-950 font-black">✓</span>
             </button>
           </template>
         </div>
@@ -130,64 +192,86 @@
       <!-- 3. Quantidade de SP -->
       <div class="flex flex-col justify-between bg-slate-950/60 p-4 rounded-xl border border-slate-800">
         <div>
-          <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">3. Meus Pontos (SP)</label>
+          <div class="flex justify-between items-center mb-2">
+            <label class="text-xs font-bold text-cyan-400 uppercase tracking-wider">3. Total de Pontos (SP)</label>
+            <span class="text-xs text-slate-400" x-text="totalSP >= 4500 ? 'Modo Endgame' : (totalSP < 800 ? 'Modo Iniciante' : 'Modo Midgame')"></span>
+          </div>
           <input 
             type="number" 
             x-model.number="totalSP" 
-            min="50" max="10000" step="50"
-            class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2.5 px-4 text-lg font-extrabold text-emerald-400 focus:outline-none focus:border-emerald-500"
+            min="50" max="15000" step="50"
+            class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2 px-4 text-xl font-extrabold text-emerald-400 focus:outline-none focus:border-emerald-500"
           >
         </div>
         <div class="mt-4">
           <input 
             type="range" 
             x-model.number="totalSP" 
-            min="100" max="5000" step="50"
+            min="100" max="6000" step="50"
             class="w-full accent-emerald-500 cursor-pointer"
           >
           <div class="flex justify-between text-[10px] text-slate-500 mt-1">
-            <span>Iniciante (100)</span>
-            <span>Endgame (5000+)</span>
+            <span>100 SP</span>
+            <span>3000 SP</span>
+            <span>6000+ SP</span>
           </div>
         </div>
       </div>
 
     </div>
+
+    <!-- Barra de Filtro Rápido e Ocultar Inúteis -->
+    <div class="pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row gap-4 justify-between items-center">
+      <div class="relative w-full sm:w-80">
+        <input 
+          type="text" 
+          x-model="searchSkill" 
+          placeholder="Buscar habilidade (ex: Anchoring Shot)..." 
+          class="w-full bg-slate-950 border border-slate-700 rounded-xl py-2 px-4 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 placeholder:text-slate-600"
+        >
+      </div>
+      
+      <label class="flex items-center gap-3 cursor-pointer select-none text-xs font-semibold text-slate-300 bg-slate-800/60 px-4 py-2 rounded-xl border border-slate-700 hover:border-slate-600 transition-colors">
+        <input type="checkbox" x-model="hideZero" class="accent-emerald-500 w-4 h-4 rounded cursor-pointer">
+        <span>Esconder habilidades inúteis (Nível 0)</span>
+      </label>
+    </div>
   </div>
 
-  <!-- Grelha das Árvores de Habilidade -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <!-- Grelha das 6 Árvores de Habilidade -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <template x-for="tree in trees">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex flex-col">
+      <div class="bg-slate-900 border rounded-2xl overflow-hidden shadow-xl flex flex-col" :class="tree.border">
         
         <!-- Cabeçalho da Árvore -->
-        <div class="p-4 bg-slate-800/40 border-b border-slate-800 flex items-center justify-between">
+        <div class="p-4 bg-slate-800/50 border-b border-slate-800 flex items-center justify-between">
           <h3 class="font-extrabold text-sm uppercase tracking-wider text-white" x-text="tree.name"></h3>
-          <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
-            Árvore
-          </span>
+          <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full" :class="tree.badge" x-text="treeActiveCount(tree) + ' ativas'"></span>
         </div>
 
         <!-- Lista de Habilidades da Árvore -->
-        <div class="p-4 space-y-3 flex-1">
+        <div class="p-4 space-y-2.5 flex-1">
           <template x-for="skill in tree.skills">
-            <div class="p-3 rounded-xl bg-slate-950/40 border border-slate-800/80 flex flex-col gap-2"
-                 :class="calcLevel(skill) === 0 ? 'opacity-40' : ''">
+            <div x-show="shouldShow(skill)"
+                 class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 flex flex-col gap-2 transition-all"
+                 :class="calcLevel(skill) === 0 ? 'opacity-35 hover:opacity-75' : 'hover:border-slate-700'">
               
-              <div class="flex justify-between items-center">
-                <span class="font-semibold text-sm text-slate-200" x-text="skill.name"></span>
-                <div class="flex items-center gap-1">
-                  <span class="text-xs text-slate-500">Nível:</span>
-                  <span class="text-sm font-black px-2 py-0.5 rounded bg-slate-800"
-                        :class="calcLevel(skill) > 0 ? 'text-emerald-400 border border-emerald-500/30' : 'text-slate-600'"
-                        x-text="calcLevel(skill) + ' / ' + skill.max">
-                  </span>
+              <div class="flex justify-between items-center gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-400" x-text="'T' + skill.tier"></span>
+                  <span class="font-semibold text-xs text-slate-200" x-text="skill.name"></span>
                 </div>
+                
+                <span class="text-xs font-black px-2 py-0.5 rounded shrink-0"
+                      :class="calcLevel(skill) === skill.max ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : (calcLevel(skill) > 0 ? 'bg-slate-800 text-white border border-slate-700' : 'bg-slate-900 text-slate-600')"
+                      x-text="calcLevel(skill) + ' / ' + skill.max">
+                </span>
               </div>
 
-              <!-- Barra de Nível Recomendado -->
-              <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
-                <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-500"
+              <!-- Barra de Nível estilo Nível de Água -->
+              <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800/80">
+                <div class="h-full bg-gradient-to-r transition-all duration-500"
+                     :class="tree.bar"
                      :style="`width: ${(calcLevel(skill) / skill.max) * 100}%`">
                 </div>
               </div>
