@@ -5,7 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hub TT2 - Clã</title>
   
+  <!-- 1. Tailwind CSS (Design) -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- 2. HTMX (Trocar conteúdo sem recarregar a página) -->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+  <!-- 3. Alpine.js (Para a barra de pesquisa funcionar) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  
+  <!-- 4. Lucide (Ícones do menu) -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -20,26 +29,41 @@
       <h2 class="text-xl font-extrabold text-white">Hub do Clã</h2>
     </div>
     
-    <!-- Botão corrigido apontando para tabela-aflicoes.html -->
-    <a href="tabela-aflicoes.html" class="flex items-center gap-3 w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white py-3 px-4 rounded-xl transition-colors font-semibold border border-transparent hover:border-slate-600">
+    <!-- Botão HTMX Corrigido -->
+    <button 
+      hx-get="tabela-aflicoes.html" 
+      hx-target="#conteudo-principal" 
+      hx-swap="innerHTML"
+      class="flex items-center gap-3 w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white py-3 px-4 rounded-xl transition-colors font-semibold border border-transparent hover:border-slate-600 text-left cursor-pointer">
       <i data-lucide="flask-conical" class="w-5 h-5 text-emerald-400"></i>
       Tabela de Aflições
-    </a>
+    </button>
     
-    <a href="guia-foguetes.html" class="flex items-center gap-3 w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white py-3 px-4 rounded-xl transition-colors font-semibold border border-transparent hover:border-slate-600">
+    <!-- Botão HTMX Corrigido -->
+    <button 
+      hx-get="guia-foguetes.html" 
+      hx-target="#conteudo-principal" 
+      hx-swap="innerHTML"
+      class="flex items-center gap-3 w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white py-3 px-4 rounded-xl transition-colors font-semibold border border-transparent hover:border-slate-600 text-left cursor-pointer">
       <i data-lucide="crosshairs" class="w-5 h-5 text-rose-400"></i>
       Guia de Foguetes
-    </a>
+    </button>
   </aside>
 
   <!-- Ecrã Principal -->
   <main class="flex-1 p-10">
-    <div class="w-full max-w-4xl mx-auto text-center py-20">
-      <div class="flex justify-center mb-4">
-        <i data-lucide="swords" class="w-16 h-16 text-slate-700"></i>
+    <!-- O id "conteudo-principal" é onde o HTMX vai injetar a tabela -->
+    <div id="conteudo-principal" class="w-full max-w-4xl mx-auto">
+      
+      <!-- Ecrã de Boas-vindas -->
+      <div class="text-center py-20">
+        <div class="flex justify-center mb-4">
+          <i data-lucide="swords" class="w-16 h-16 text-slate-700"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-slate-400">Bem-vindo ao Hub</h1>
+        <p class="text-slate-500 mt-2">Selecione uma ferramenta no menu lateral.</p>
       </div>
-      <h1 class="text-3xl font-bold text-slate-400">Bem-vindo ao Hub</h1>
-      <p class="text-slate-500 mt-2">Selecione uma ferramenta no menu lateral.</p>
+
     </div>
   </main>
 
