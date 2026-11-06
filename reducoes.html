@@ -1,0 +1,165 @@
+<!-- Ficheiro: reducoes.html (Fragmento para HTMX) -->
+<div class="w-full max-w-4xl space-y-6 animate-fade-in" x-data="{
+  currentBuild: 'SC',
+  currentGold: 'Fada',
+  builds: ['CS', 'GG', 'SC', 'Pet', 'DG', 'HS'],
+  golds: ['Fada', 'Pet', 'Multi'],
+  
+  damageReductions: [
+    { attr: 'All Damage / Dano Crítico', CS: 1, GG: 1, SC: 1, Pet: 1, DG: 1, HS: 1 },
+    { attr: 'Chance de Crítico', CS: 1, GG: 1, SC: 1, Pet: 1, DG: 1, HS: 0 },
+    { attr: 'Herói Base / Arma de Herói', CS: 1, GG: 1, SC: 1, Pet: 1, DG: 1, HS: 1 },
+    { attr: 'Tap dos Heróis', CS: 0, GG: 1, SC: 1, Pet: 1, DG: 1, HS: 1 },
+    { attr: 'Dano da Build Específica', CS: 1, GG: 1, SC: 1, Pet: 1, DG: 1, HS: 1 },
+    { attr: 'Companheiro (Companion)', CS: 1, GG: 0, SC: 1, Pet: 1, DG: 0, HS: 0 },
+    { attr: 'Gunblade', CS: 0, GG: 0.45, SC: 0.6, Pet: 0, DG: 0.65, HS: 0.75 },
+    { attr: 'Grito de Guerra (War Cry)', CS: 1, GG: 0.9, SC: 0.6, Pet: 0.5, DG: 0.5, HS: 0.5 },
+    { attr: 'Espada de Fogo (Fire Sword)', CS: 0, GG: 0.45, SC: 0.6, Pet: 1, DG: 1, HS: 1 },
+    { attr: 'Acerto Mortal (Deadly Strike)', CS: 0.5, GG: 0.6, SC: 0.6, Pet: 0.7, DG: 0.75, HS: 0 }
+  ],
+  
+  goldReductions: [
+    { attr: 'All Gold / Jackpot', Fada: 1, Pet: 1, Multi: 1 },
+    { attr: 'Especialidade', Fada: 1, Pet: 1, Multi: 0 },
+    { attr: 'Mão de Midas (Hand of Midas)', Fada: 0.6, Pet: 0.6, Multi: 1 },
+    { attr: 'Chefe (Boss Gold)', Fada: 0, Pet: 1, Multi: 0 },
+    { attr: 'Chesterson Gold', Fada: 1, Pet: 0, Multi: 1 }
+  ]
+}">
+
+  <!-- Cabeçalho -->
+  <div class="text-center space-y-2 mb-8">
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase">
+      Tabela de <span class="text-amber-500">Reduções</span>
+    </h1>
+    <p class="text-slate-400 text-sm">Entenda como o jogo normaliza os bónus para All Damage e All Gold</p>
+  </div>
+
+  <!-- Cartão de Dano -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+    <div class="p-6 border-b border-slate-800/80 bg-slate-800/30">
+      <div class="flex items-center gap-2 mb-4">
+        <i data-lucide="swords" class="w-5 h-5 text-emerald-400"></i>
+        <h2 class="text-sm font-bold text-emerald-400 uppercase tracking-wider">1. Escolha a sua Build de Dano</h2>
+      </div>
+      
+      <!-- Seletores de Build (Botões tipo Pill) -->
+      <div class="flex flex-wrap gap-2">
+        <template x-for="build in builds">
+          <button 
+            @click="currentBuild = build"
+            :class="currentBuild === build ? 'bg-emerald-500 text-slate-950 font-bold border-emerald-500' : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-emerald-500/50 hover:text-white'"
+            class="px-4 py-2 text-xs rounded-xl border transition-all duration-200"
+            x-text="build">
+          </button>
+        </template>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left border-collapse">
+        <thead>
+          <tr class="bg-slate-800/50 text-slate-400 text-xs uppercase tracking-wider">
+            <th class="p-4 font-bold border-b border-slate-700/50">Fonte de Dano</th>
+            <th class="p-4 font-bold border-b border-slate-700/50 text-center w-40">
+              Expoente (<span x-text="currentBuild" class="text-emerald-400"></span>)
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/80">
+          <template x-for="item in damageReductions">
+            <tr class="hover:bg-slate-800/30 transition-colors">
+              <td class="p-4 font-medium text-slate-200" x-text="item.attr"></td>
+              <td class="p-4 text-center">
+                <!-- Lógica de cores das etiquetas com Alpine -->
+                <span 
+                  class="inline-block px-3 py-1 rounded-md text-xs font-bold"
+                  :class="{
+                    'bg-emerald-500/15 text-emerald-400': item[currentBuild] === 1,
+                    'bg-rose-500/15 text-rose-400': item[currentBuild] === 0,
+                    'bg-amber-500/15 text-amber-400': item[currentBuild] > 0 && item[currentBuild] < 1
+                  }"
+                  x-text="item[currentBuild] === 1 ? '^1.0 (100%)' : (item[currentBuild] === 0 ? '^0.0 (Inútil)' : '^' + item[currentBuild])">
+                </span>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Cartão de Ouro -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden mt-6">
+    <div class="p-6 border-b border-slate-800/80 bg-slate-800/30">
+      <div class="flex items-center gap-2 mb-4">
+        <i data-lucide="coins" class="w-5 h-5 text-amber-400"></i>
+        <h2 class="text-sm font-bold text-amber-400 uppercase tracking-wider">2. Escolha a sua Fonte de Ouro</h2>
+      </div>
+      
+      <div class="flex flex-wrap gap-2">
+        <template x-for="gold in golds">
+          <button 
+            @click="currentGold = gold"
+            :class="currentGold === gold ? 'bg-amber-500 text-slate-950 font-bold border-amber-500' : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-amber-500/50 hover:text-white'"
+            class="px-4 py-2 text-xs rounded-xl border transition-all duration-200"
+            x-text="gold">
+          </button>
+        </template>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left border-collapse">
+        <thead>
+          <tr class="bg-slate-800/50 text-slate-400 text-xs uppercase tracking-wider">
+            <th class="p-4 font-bold border-b border-slate-700/50">Fonte de Ouro</th>
+            <th class="p-4 font-bold border-b border-slate-700/50 text-center w-40">
+              Expoente (<span x-text="currentGold" class="text-amber-400"></span>)
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/80">
+          <template x-for="item in goldReductions">
+            <tr class="hover:bg-slate-800/30 transition-colors">
+              <td class="p-4 font-medium text-slate-200" x-text="item.attr"></td>
+              <td class="p-4 text-center">
+                <span 
+                  class="inline-block px-3 py-1 rounded-md text-xs font-bold"
+                  :class="{
+                    'bg-emerald-500/15 text-emerald-400': item[currentGold] === 1,
+                    'bg-rose-500/15 text-rose-400': item[currentGold] === 0,
+                    'bg-amber-500/15 text-amber-400': item[currentGold] > 0 && item[currentGold] < 1
+                  }"
+                  x-text="item[currentGold] === 1 ? '^1.0 (100%)' : (item[currentGold] === 0 ? '^0.0 (Inútil)' : '^' + item[currentGold])">
+                </span>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Cartão Explicativo -->
+  <div class="bg-slate-800/40 border-l-4 border-amber-500 rounded-r-xl p-6 text-sm text-slate-300 shadow-sm mt-8">
+    <h4 class="text-amber-500 font-bold text-base mb-3">Como funciona o algoritmo de conversão?</h4>
+    <p class="mb-4">
+      No <em>Tap Titans 2</em>, todo multiplicador específico de dano é padronizado pelo jogo como se fosse <strong>All Damage</strong> (Todos os Danos), assim como cada bônus económico é convertido em <strong>All Gold</strong> (Todo Ouro).
+    </p>
+    <p class="mb-3">Essa conversão ocorre por meio de uma operação <strong>exponencial</strong> utilizando o expoente de eficiência de cada atributo:</p>
+    
+    <div class="bg-slate-950 border border-slate-700/50 rounded-lg py-3 px-4 text-emerald-400 font-mono text-xs font-semibold w-fit mb-4">
+      Valor Real = (Bônus do Atributo) ^ (Expoente de Redução)
+    </div>
+    
+    <p class="mb-2"><strong>Exemplo prático:</strong> Se joga com a build de <em>Shadow Clone (SC)</em> e possui um artefacto ou equipamento que concede <strong>500.000.000</strong> (500M) de <em>Acerto Mortal</em>, a tabela indica que a taxa de redução é de <strong>0,6</strong>. O jogo processa:</p>
+    
+    <div class="bg-slate-950 border border-slate-700/50 rounded-lg py-3 px-4 text-emerald-400 font-mono text-xs font-semibold w-fit mb-4">
+      500.000.000 ^ 0.6 ≈ 165.726 (165K)
+    </div>
+    
+    <p>Portanto, os seus 500M de Acerto Mortal equivalem a <strong>~165K de All Damage</strong> para a sua build.</p>
+  </div>
+
+</div>
