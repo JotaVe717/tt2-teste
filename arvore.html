@@ -1,0 +1,203 @@
+<!-- Ficheiro: arvore.html (Fragmento para HTMX) -->
+<div class="w-full max-w-5xl space-y-6 animate-fade-in" x-data="{
+  build: 'CS',
+  gold: 'Fada',
+  totalSP: 1500,
+  
+  builds: [
+    { id: 'CS', name: 'Clan Ship', color: 'amber' },
+    { id: 'SC', name: 'Shadow Clone', color: 'purple' },
+    { id: 'Pet', name: 'Pet', color: 'rose' },
+    { id: 'HS', name: 'Heavenly Strike', color: 'cyan' },
+    { id: 'DG', name: 'Dagger', color: 'emerald' },
+    { id: 'GG', name: 'Gold Gun', color: 'yellow' }
+  ],
+  
+  golds: ['Fada', 'HoG', 'Chesterson'],
+
+  trees: [
+    {
+      id: 'knight', name: 'Cavaleiro (Knight)', color: 'rose',
+      skills: [
+        { name: 'Knight\'s Valor', max: 20, weight: { CS: 0.2, SC: 0.3, Pet: 1, HS: 0.8, DG: 0.4, GG: 0.2 } },
+        { name: 'Chivalric Order', max: 20, weight: { CS: 0.3, SC: 0.5, Pet: 0.9, HS: 0.9, DG: 0.5, GG: 0.3 } },
+        { name: 'Cleaving Strike', max: 20, weight: { CS: 0.8, SC: 0.8, Pet: 1, HS: 1, DG: 0.9, GG: 0.7 } },
+        { name: 'Barbaric Fury', max: 15, weight: { CS: 0, SC: 0.6, Pet: 1, HS: 0.8, DG: 0.7, GG: 0 } },
+        { name: 'Twilight Gathering', max: 25, weight: { CS: 0, SC: 0.7, Pet: 0.9, HS: 1, DG: 0, GG: 0 } }
+      ]
+    },
+    {
+      id: 'warlord', name: 'Senhor da Guerra (Warlord)', color: 'amber',
+      skills: [
+        { name: 'Master Commander', max: 20, weight: { CS: 1, SC: 0.4, Pet: 0.3, HS: 0.2, DG: 0.3, GG: 0.8 } },
+        { name: 'Heroic Might', max: 20, weight: { CS: 1, SC: 0.6, Pet: 0.4, HS: 0.3, DG: 0.4, GG: 0.9 } },
+        { name: 'Aerial Assault', max: 20, weight: { CS: 1, SC: 0.2, Pet: 0.1, HS: 0, DG: 0.1, GG: 0.5 } },
+        { name: 'Tactical Insight', max: 20, weight: { CS: 0.9, SC: 0.8, Pet: 0.8, HS: 0.7, DG: 0.8, GG: 0.9 } },
+        { name: 'Anchoring Shot', max: 15, weight: { CS: 1, SC: 0.8, Pet: 0.7, HS: 0.6, DG: 0.9, GG: 0.8 } },
+        { name: 'Astral Awakening', max: 15, weight: { CS: 1, SC: 0.9, Pet: 0.8, HS: 0.7, DG: 0.8, GG: 0.9 } },
+        { name: 'Voltaic Sails', max: 25, weight: { CS: 1, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 0 } }
+      ]
+    },
+    {
+      id: 'sorcerer', name: 'Feiticeiro (Sorcerer)', color: 'cyan',
+      skills: [
+        { name: 'Limit Break', max: 20, weight: { CS: 0.2, SC: 0.6, Pet: 0.3, HS: 0.9, DG: 0.3, GG: 0.2 } },
+        { name: 'Midas Ultimate', max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 0.8 }, goldMod: { Fada: 1, HoG: 0.7, Chesterson: 0.8 } },
+        { name: 'Fairy Charm', max: 10, weight: { CS: 0.6, SC: 0.6, Pet: 0.6, HS: 0.6, DG: 0.6, GG: 0.6 }, goldMod: { Fada: 1.5, HoG: 0.1, Chesterson: 0.1 } },
+        { name: 'Phantom Vengeance', max: 20, weight: { CS: 0, SC: 1, Pet: 0, HS: 0, DG: 0, GG: 0 } },
+        { name: 'Dimensional Shift', max: 20, weight: { CS: 0.6, SC: 1, Pet: 0.6, HS: 0.8, DG: 0.6, GG: 0.6 } }
+      ]
+    },
+    {
+      id: 'rogue', name: 'Ladino (Rogue)', color: 'emerald',
+      skills: [
+        { name: 'Master Thief', max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 0.8 } },
+        { name: 'Assassinate', max: 20, weight: { CS: 0.6, SC: 0.7, Pet: 0.8, HS: 0, DG: 1, GG: 0.6 } },
+        { name: 'Summon Dagger', max: 20, weight: { CS: 0.1, SC: 0.2, Pet: 0.3, HS: 0, DG: 1, GG: 0.1 } },
+        { name: 'Cloaking', max: 15, weight: { CS: 0.5, SC: 0.6, Pet: 0.5, HS: 0.7, DG: 0.6, GG: 0.4 } },
+        { name: 'Poison Edge', max: 20, weight: { CS: 0.6, SC: 0.5, Pet: 0.7, HS: 0.3, DG: 1, GG: 0.5 } },
+        { name: 'Blade Stream', max: 25, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 1, GG: 0 } }
+      ]
+    },
+    {
+      id: 'alchemist', name: 'Alquimista (Alchemist)', color: 'yellow',
+      skills: [
+        { name: 'Transmutation', max: 20, weight: { CS: 0.5, SC: 0.5, Pet: 0.5, HS: 0.5, DG: 0.5, GG: 1 } },
+        { name: 'Gold Gun', max: 20, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 1 } },
+        { name: 'Midas Overflow', max: 20, weight: { CS: 0.7, SC: 0.7, Pet: 0.7, HS: 0.7, DG: 0.7, GG: 1 }, goldMod: { Fada: 1, HoG: 0.6, Chesterson: 1 } },
+        { name: 'Auric Shot', max: 25, weight: { CS: 0, SC: 0, Pet: 0, HS: 0, DG: 0, GG: 1 } }
+      ]
+    }
+  ],
+
+  calcLevel(skill) {
+    let baseW = skill.weight[this.build] || 0;
+    if (skill.goldMod) {
+      baseW = baseW * (skill.goldMod[this.gold] || 1);
+    }
+    if (baseW === 0) return 0;
+    
+    // Escala proporcional aos SP disponíveis (base de referência: 3000 SP para full build)
+    let factor = Math.min(1, Math.max(0.1, this.totalSP / 3000));
+    let rawLevel = Math.round(skill.max * baseW * factor);
+    return Math.min(skill.max, Math.max(1, rawLevel));
+  }
+}">
+
+  <!-- Cabeçalho -->
+  <div class="text-center space-y-2 mb-6">
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase">
+      Otimizador de <span class="text-emerald-400">Skill Tree</span>
+    </h1>
+    <p class="text-slate-400 text-sm">Distribuição inteligente de pontos de habilidade conforme sua Build e Pontos (SP)</p>
+  </div>
+
+  <!-- Painel de Controlo (Filtros) -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- 1. Escolha da Build -->
+      <div>
+        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">1. Build de Dano</label>
+        <div class="grid grid-cols-2 gap-2">
+          <template x-for="b in builds">
+            <button 
+              @click="build = b.id"
+              :class="build === b.id ? 'bg-emerald-500 text-slate-950 font-bold border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.3)]' : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'"
+              class="py-2 px-3 rounded-xl border text-xs transition-all text-center"
+              x-text="b.name">
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- 2. Fonte de Ouro -->
+      <div>
+        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">2. Fonte de Ouro</label>
+        <div class="flex flex-col gap-2">
+          <template x-for="g in golds">
+            <button 
+              @click="gold = g"
+              :class="gold === g ? 'bg-amber-500 text-slate-950 font-bold border-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.3)]' : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'"
+              class="py-2 px-4 rounded-xl border text-xs transition-all text-left flex justify-between items-center">
+              <span x-text="g"></span>
+              <span x-show="gold === g" class="text-slate-950 font-black">✓</span>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- 3. Quantidade de SP -->
+      <div class="flex flex-col justify-between bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        <div>
+          <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">3. Meus Pontos (SP)</label>
+          <input 
+            type="number" 
+            x-model.number="totalSP" 
+            min="50" max="10000" step="50"
+            class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2.5 px-4 text-lg font-extrabold text-emerald-400 focus:outline-none focus:border-emerald-500"
+          >
+        </div>
+        <div class="mt-4">
+          <input 
+            type="range" 
+            x-model.number="totalSP" 
+            min="100" max="5000" step="50"
+            class="w-full accent-emerald-500 cursor-pointer"
+          >
+          <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+            <span>Iniciante (100)</span>
+            <span>Endgame (5000+)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Grelha das Árvores de Habilidade -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <template x-for="tree in trees">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex flex-col">
+        
+        <!-- Cabeçalho da Árvore -->
+        <div class="p-4 bg-slate-800/40 border-b border-slate-800 flex items-center justify-between">
+          <h3 class="font-extrabold text-sm uppercase tracking-wider text-white" x-text="tree.name"></h3>
+          <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+            Árvore
+          </span>
+        </div>
+
+        <!-- Lista de Habilidades da Árvore -->
+        <div class="p-4 space-y-3 flex-1">
+          <template x-for="skill in tree.skills">
+            <div class="p-3 rounded-xl bg-slate-950/40 border border-slate-800/80 flex flex-col gap-2"
+                 :class="calcLevel(skill) === 0 ? 'opacity-40' : ''">
+              
+              <div class="flex justify-between items-center">
+                <span class="font-semibold text-sm text-slate-200" x-text="skill.name"></span>
+                <div class="flex items-center gap-1">
+                  <span class="text-xs text-slate-500">Nível:</span>
+                  <span class="text-sm font-black px-2 py-0.5 rounded bg-slate-800"
+                        :class="calcLevel(skill) > 0 ? 'text-emerald-400 border border-emerald-500/30' : 'text-slate-600'"
+                        x-text="calcLevel(skill) + ' / ' + skill.max">
+                  </span>
+                </div>
+              </div>
+
+              <!-- Barra de Nível Recomendado -->
+              <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-500"
+                     :style="`width: ${(calcLevel(skill) / skill.max) * 100}%`">
+                </div>
+              </div>
+
+            </div>
+          </template>
+        </div>
+
+      </div>
+    </template>
+  </div>
+
+</div>
